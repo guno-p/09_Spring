@@ -2,6 +2,8 @@ package org.scoula.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
@@ -15,7 +17,9 @@ import org.springframework.web.servlet.view.JstlView;
  * - 사용자 요청 처리와 관련된 모든 웹 컴포넌트들을 관리하고 설정함
  */
 @EnableWebMvc
-@ComponentScan(basePackages = {"org.scoula.controller"}) // Spring MVC용 컴포넌트 등록을 위한 스캔 패키지
+@ComponentScan(basePackages = {
+        "org.scoula.exception",    // 📍 예외 처리 패키지 추가, 우선 스캔되도록 앞에 작성
+        "org.scoula.controller"})  // Spring MVC용 컴포넌트 등록을 위한 스캔 패키지
 public class ServletConfig implements WebMvcConfigurer {
 
     /**
@@ -71,5 +75,12 @@ public class ServletConfig implements WebMvcConfigurer {
         bean.setPrefix("/WEB-INF/views/");           // JSP 파일 기본 경로
         bean.setSuffix(".jsp");                      // JSP 파일 확장자
         registry.viewResolver(bean);                 // ViewResolver 등록
+    }
+    // 📍 Servlet 3.0 파일 업로드 설정
+    @Bean
+    public MultipartResolver multipartResolver() {
+        StandardServletMultipartResolver resolver =
+                new StandardServletMultipartResolver();
+        return resolver;
     }
 }
