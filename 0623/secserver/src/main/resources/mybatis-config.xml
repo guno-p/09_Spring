@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <!-- Camel 표기법 자동 매핑 설정 -->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+
+    <typeAliases>
+        <!-- 도메인 패키지 전체를 별칭으로 등록 / 클래스명으로 사용 가능 -->
+        <package name="org.scoula.security.account.domain" />
+    </typeAliases>
+</configuration>
